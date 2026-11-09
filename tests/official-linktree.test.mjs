@@ -33,13 +33,15 @@ test('keeps the approved Neurodiet description verbatim', () => {
   assert.equal(neurodiet?.description, 'Prevenção e reversão do Alzheimer');
 });
 
-test('shows approved identity and headline without wizard-style controls', () => {
-  assert.match(html, /<strong>DR\. André Gustavo<\/strong>/);
-  assert.match(html, /Qual caminho te leva<br \/>a uma vida melhor\?/);
-  assert.doesNotMatch(html, /top-controls|back-button|close-button|progress-count|role="progressbar"/);
-  assert.match(css, /\.monogram\s*\{[^}]*transform:\s*scaleX\(\.72\)/s);
-  assert.match(css, /\.brand-name strong\s*\{[^}]*linear-gradient/s);
-  assert.match(css, /\.heading-wrap h1\s*\{[^}]*linear-gradient/s);
+test('restores reference card with branded identity, progress and six links', () => {
+  assert.match(html, /DR\. ANDRÉ G\./);
+  assert.match(html, /EICHSTAEDT/);
+  assert.match(html, /Explore meus<br \/>conteúdos e projetos/);
+  assert.match(html, /id="back-button"/);
+  assert.match(html, /id="close-button"/);
+  assert.match(html, /class="progress-count">1\/6/);
+  assert.match(html, /role="progressbar"/);
+  assert.match(html, /href="reference\.css\?v=/);
 });
 
 test('ships responsive WebP portrait variants from the same source photo', () => {
@@ -55,18 +57,21 @@ test('ships responsive WebP portrait variants from the same source photo', () =>
   assert.match(app, /--portrait-image-mobile/);
 });
 
-test('removes wizard interactions and preserves motion accessibility', () => {
-  assert.doesNotMatch(app, /back-button|close-button/);
+test('back, close and reopen controls remain functional', () => {
+  assert.match(app, /#back-button/);
+  assert.match(app, /#close-button/);
+  assert.match(app, /#open-panel/);
+  assert.match(app, /addEventListener\('click', showPanel\)/);
   assert.match(app, /prefers-reduced-motion: reduce/);
 });
 
-test('shows the entire portrait without cover cropping on desktop and mobile', () => {
-  assert.match(css, /@media \(max-width: 759px\)[\s\S]*?\.portal\s*\{[^}]*display:\s*flex/s);
-  assert.match(css, /\.portrait\s*\{[^}]*background-size:\s*contain/s);
-  assert.match(css, /@media \(min-width: 760px\)[\s\S]*?\.portrait\s*\{[^}]*background-size:\s*contain/s);
-  assert.match(css, /@media \(max-width: 759px\)[\s\S]*?\.portrait\s*\{[^}]*background-size:\s*contain/s);
-  assert.doesNotMatch(css, /background-size:\s*auto\s*230%/);
-  assert.match(css, /\.glass-panel\s*\{[^}]*max-height:\s*none[^}]*overflow:\s*visible/s);
+test('places a large bust behind an overlapping glass panel on mobile and desktop', () => {
+  const reference = read('reference.css');
+  assert.match(reference, /\.portrait\s*\{[^}]*background-size:\s*contain/s);
+  assert.match(reference, /@media \(max-width: 759px\)[\s\S]*?\.portrait\s*\{[^}]*width:\s*950px/s);
+  assert.match(reference, /\.glass-panel\s*\{[^}]*backdrop-filter/s);
+  assert.match(reference, /\.top-controls\s*\{/);
+  assert.doesNotMatch(reference, /margin:\s*min\(54svh/);
 });
 
 test('compacts tablet landscape without shrinking primary touch targets below 44px', () => {
@@ -96,11 +101,12 @@ test('responds to pointer and scroll with requestAnimationFrame, with reduced-mo
   assert.match(app, /prefers-reduced-motion: reduce/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
   assert.match(css, /\.portrait, \.ambient \{ transform: none !important/);
-  assert.match(css, /@media \(max-width: 759px\) and \(prefers-reduced-motion: reduce\)[\s\S]*?\.portrait\s*\{[^}]*translateX\(-50%\)/);
+  const reference = read('reference.css');
+  assert.match(reference, /@media \(prefers-reduced-motion: reduce\)/);
 });
 
 test('does not add analytics, tracking, or sharing', () => {
-  const source = `${html}\n${app}\n${css}`.toLowerCase();
+  const source = `${html}\n${app}\n${css}\n${read('reference.css')}`.toLowerCase();
   for (const marker of ['gtag(', 'googletagmanager', 'analytics.js', 'facebook pixel', 'hotjar', 'mixpanel', 'amplitude', 'navigator.share']) {
     assert.equal(source.includes(marker), false, `unexpected feature marker: ${marker}`);
   }

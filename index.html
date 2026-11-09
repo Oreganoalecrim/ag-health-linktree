@@ -15,9 +15,10 @@
     <meta name="twitter:card" content="summary_large_image" />
     <title>Dr. André G. Eichstaedt | Link oficial</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=20261109-gold-2" />
-    <script defer src="config.js?v=20261109-gold-2"></script>
-    <script defer src="app.js?v=20261109-gold-2"></script>
+    <link rel="stylesheet" href="styles.css?v=20261109-reference-3" />
+    <link rel="stylesheet" href="reference.css?v=20261109-reference-3" />
+    <script defer src="config.js?v=20261109-reference-3"></script>
+    <script defer src="app.js?v=20261109-reference-3"></script>
   </head>
   <body>
     <main class="portal" id="top">
@@ -26,16 +27,28 @@
       <div class="portrait-shade" aria-hidden="true"></div>
 
       <section class="glass-panel" aria-labelledby="page-title">
+        <div class="top-controls" aria-label="Navegação">
+          <button type="button" class="chrome-button" id="back-button" aria-label="Voltar" title="Voltar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4m7-7-7 7 7 7" /></svg>
+          </button>
+          <div class="progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" aria-label="Etapa 1 de 6">
+            <div class="progress-fill"></div>
+            <span class="progress-count">1/6</span>
+          </div>
+          <button type="button" class="chrome-button" id="close-button" aria-label="Fechar painel" title="Fechar painel">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" /></svg>
+          </button>
+        </div>
         <div class="brand-lockup">
           <div class="monogram" aria-label="AG">AG</div>
           <div class="brand-name">
-            <strong>DR. André Gustavo</strong>
+            <strong>DR. ANDRÉ G.<br />EICHSTAEDT</strong>
           </div>
         </div>
         <p class="brand-tagline">SAÚDE · LONGEVIDADE · PERFORMANCE</p>
 
         <div class="heading-wrap">
-          <h1 id="page-title" tabindex="-1">Qual caminho te leva<br />a uma vida melhor?</h1>
+          <h1 id="page-title" tabindex="-1">Explore meus<br />conteúdos e projetos</h1>
           <span class="golden-underline" aria-hidden="true"></span>
         </div>
 
@@ -48,6 +61,7 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
         </a>
       </section>
+      <button type="button" id="open-panel" class="open-panel" hidden>Explorar conteúdos e projetos</button>
     </main>
   </body>
 </html>
