@@ -13,6 +13,48 @@
     if (portraitTabletUrl || portraitDesktopUrl) portrait.style.setProperty('--portrait-image', `url("${portraitTabletUrl || portraitDesktopUrl}")`);
   }
 
+  // Gentle depth without cropping, scale-up or a synthetic face animation.
+  // Request-animation-frame limits work to one update per painted frame.
+  const portal = document.querySelector('.portal');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const pointerDepth = window.matchMedia('(hover: hover) and (pointer: fine)');
+  if (portal && !reducedMotion.matches) {
+    let pointerFrame = 0;
+    let pointerX = 0;
+    let pointerY = 0;
+    const paintPointer = () => {
+      portal.style.setProperty('--pointer-x', pointerX.toFixed(3));
+      portal.style.setProperty('--pointer-y', pointerY.toFixed(3));
+      pointerFrame = 0;
+    };
+    const requestPointerPaint = () => {
+      if (!pointerFrame) pointerFrame = window.requestAnimationFrame(paintPointer);
+    };
+    if (pointerDepth.matches) {
+      portal.addEventListener('pointermove', (event) => {
+        const rect = portal.getBoundingClientRect();
+        pointerX = Math.max(-1, Math.min(1, (2 * (event.clientX - rect.left) / rect.width) - 1));
+        pointerY = Math.max(-1, Math.min(1, (2 * (event.clientY - rect.top) / rect.height) - 1));
+        requestPointerPaint();
+      }, { passive: true });
+      portal.addEventListener('pointerleave', () => {
+        pointerX = 0;
+        pointerY = 0;
+        requestPointerPaint();
+      });
+    }
+    let scrollFrame = 0;
+    const paintScroll = () => {
+      const progress = Math.min(1, Math.max(0, window.scrollY / Math.max(1, window.innerHeight)));
+      portal.style.setProperty('--scroll-shift', window.innerWidth < 760 ? `${(-14 * progress).toFixed(1)}px` : '0px');
+      scrollFrame = 0;
+    };
+    window.addEventListener('scroll', () => {
+      if (!scrollFrame) scrollFrame = window.requestAnimationFrame(paintScroll);
+    }, { passive: true });
+    paintScroll();
+  }
+
   const icons = {
     play: '<path d="M8 5.5v13l10-6.5-10-6.5Z" fill="currentColor" stroke="none"/>',
     book: '<path d="M3.5 5.5c3.4-1.4 6.2-.9 8.5 1.3v13c-2.3-2.2-5.1-2.7-8.5-1.3v-13Z"/><path d="M20.5 5.5c-3.4-1.4-6.2-.9-8.5 1.3v13c2.3-2.2 5.1-2.7 8.5-1.3v-13Z"/><path d="M7 8.5c1.1-.2 2.1 0 3 .5M17 8.5c-1.1-.2-2.1 0-3 .5"/>',

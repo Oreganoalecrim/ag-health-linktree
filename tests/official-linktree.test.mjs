@@ -60,10 +60,13 @@ test('keeps Voltar focused and scrolls the active container with reduced-motion 
   assert.match(app, /focus\(\{ preventScroll: true \}\)/);
 });
 
-test('shows the real portrait above the mobile glass panel and keeps the page scrollable', () => {
+test('shows the entire portrait without cover cropping on desktop and mobile', () => {
   assert.match(css, /@media \(max-width: 759px\)[\s\S]*?\.portal\s*\{[^}]*display:\s*flex/s);
-  assert.match(css, /\.portrait\s*\{[^}]*top:\s*0[^}]*background-position:\s*center 18%/s);
-  assert.match(css, /\.glass-panel\s*\{[^}]*margin:\s*clamp\(320px, 46svh, 400px\)[^}]*max-height:\s*none[^}]*overflow:\s*visible/s);
+  assert.match(css, /\.portrait\s*\{[^}]*background-size:\s*contain/s);
+  assert.match(css, /@media \(min-width: 760px\)[\s\S]*?\.portrait\s*\{[^}]*background-size:\s*contain/s);
+  assert.match(css, /@media \(max-width: 759px\)[\s\S]*?\.portrait\s*\{[^}]*background-size:\s*contain/s);
+  assert.doesNotMatch(css, /background-size:\s*auto\s*230%/);
+  assert.match(css, /\.glass-panel\s*\{[^}]*max-height:\s*none[^}]*overflow:\s*visible/s);
 });
 
 test('compacts tablet landscape without shrinking primary touch targets below 44px', () => {
@@ -87,9 +90,20 @@ test('preserves close and continue controls', () => {
   assert.ok(config.continueUrl.startsWith('https://wa.me/'));
 });
 
-test('does not add analytics, tracking, sharing, or parallax', () => {
+test('responds to pointer and scroll with requestAnimationFrame, with reduced-motion fallback', () => {
+  assert.match(app, /pointermove/);
+  assert.match(app, /window\.requestAnimationFrame\(/);
+  assert.match(app, /--pointer-x/);
+  assert.match(app, /--pointer-y/);
+  assert.match(app, /--scroll-shift/);
+  assert.match(app, /prefers-reduced-motion: reduce/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(css, /\.portrait, \.ambient \{ transform: none !important/);
+});
+
+test('does not add analytics, tracking, or sharing', () => {
   const source = `${html}\n${app}\n${css}`.toLowerCase();
-  for (const marker of ['gtag(', 'googletagmanager', 'analytics.js', 'facebook pixel', 'hotjar', 'mixpanel', 'amplitude', 'navigator.share', 'parallax']) {
+  for (const marker of ['gtag(', 'googletagmanager', 'analytics.js', 'facebook pixel', 'hotjar', 'mixpanel', 'amplitude', 'navigator.share']) {
     assert.equal(source.includes(marker), false, `unexpected feature marker: ${marker}`);
   }
   assert.doesNotMatch(html, /<script[^>]+src="https?:\/\//i);
