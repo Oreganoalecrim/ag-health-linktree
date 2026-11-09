@@ -99,6 +99,7 @@ test('responds to pointer and scroll with requestAnimationFrame, with reduced-mo
   assert.match(app, /prefers-reduced-motion: reduce/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
   assert.match(css, /\.portrait, \.ambient \{ transform: none !important/);
+  assert.match(css, /@media \(max-width: 759px\) and \(prefers-reduced-motion: reduce\)[\s\S]*?\.portrait\s*\{[^}]*translateX\(-50%\)/);
 });
 
 test('does not add analytics, tracking, or sharing', () => {

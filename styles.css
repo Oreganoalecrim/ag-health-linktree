@@ -406,6 +406,10 @@ a.social-button:hover { transform: translateY(-3px); border-color: rgba(255, 207
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .portrait, .ambient { transform: none !important; will-change: auto; }
 }
+@media (max-width: 759px) and (prefers-reduced-motion: reduce) {
+  /* The normal transform centers the full photograph; keep that positioning. */
+  .portrait { transform: translateX(-50%) !important; }
+}
 @media (prefers-reduced-transparency: reduce) {
   .glass-panel, .link-card, .social-button { -webkit-backdrop-filter: none; backdrop-filter: none; }
   .glass-panel { background: rgba(25, 17, 25, .94); }
