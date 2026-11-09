@@ -33,10 +33,13 @@ test('keeps the approved Neurodiet description verbatim', () => {
   assert.equal(neurodiet?.description, 'Prevenção e reversão do Alzheimer');
 });
 
-test('exposes an accessible 1/6 progress indicator with the correct proportion', () => {
-  assert.match(html, /role="progressbar"[^>]*aria-valuemin="1"[^>]*aria-valuemax="6"[^>]*aria-valuenow="1"/);
-  assert.match(html, /<span class="progress-count">1\/6<\/span>/);
-  assert.match(css, /\.progress-track span\s*\{[^}]*width:\s*16\.6667%/s);
+test('shows approved identity and headline without wizard-style controls', () => {
+  assert.match(html, /<strong>DR\. André Gustavo<\/strong>/);
+  assert.match(html, /Qual caminho te leva<br \/>a uma vida melhor\?/);
+  assert.doesNotMatch(html, /top-controls|back-button|close-button|progress-count|role="progressbar"/);
+  assert.match(css, /\.monogram\s*\{[^}]*transform:\s*scaleX\(\.72\)/s);
+  assert.match(css, /\.brand-name strong\s*\{[^}]*linear-gradient/s);
+  assert.match(css, /\.heading-wrap h1\s*\{[^}]*linear-gradient/s);
 });
 
 test('ships responsive WebP portrait variants from the same source photo', () => {
@@ -52,12 +55,9 @@ test('ships responsive WebP portrait variants from the same source photo', () =>
   assert.match(app, /--portrait-image-mobile/);
 });
 
-test('keeps Voltar focused and scrolls the active container with reduced-motion support', () => {
-  assert.match(app, /panel\.scrollTo\(\{ top: 0, behavior \}\)/);
-  assert.match(app, /panel\.scrollHeight > panel\.clientHeight \+ 1/);
-  assert.match(app, /window\.scrollTo\(\{ top: 0, behavior \}\)/);
+test('removes wizard interactions and preserves motion accessibility', () => {
+  assert.doesNotMatch(app, /back-button|close-button/);
   assert.match(app, /prefers-reduced-motion: reduce/);
-  assert.match(app, /focus\(\{ preventScroll: true \}\)/);
 });
 
 test('shows the entire portrait without cover cropping on desktop and mobile', () => {
@@ -82,11 +82,8 @@ test('declares the official Open Graph URL and portrait description', () => {
   assert.match(html, /property="og:image:alt" content="Retrato do Dr\. André G\. Eichstaedt"/);
 });
 
-test('preserves close and continue controls', () => {
-  assert.match(html, /id="back-button"/);
-  assert.match(html, /id="close-button"/);
+test('preserves working consultation CTA', () => {
   assert.match(html, /id="continue-button"/);
-  assert.equal(config.officialSite, 'https://agclinic.com.br');
   assert.ok(config.continueUrl.startsWith('https://wa.me/'));
 });
 

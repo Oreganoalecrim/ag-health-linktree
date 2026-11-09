@@ -119,15 +119,4 @@
   const continueButton = document.querySelector('#continue-button');
   if (continueButton && config.continueUrl) continueButton.href = config.continueUrl;
 
-  const closeButton = document.querySelector('#close-button');
-  if (closeButton && config.officialSite) closeButton.href = config.officialSite;
-
-  document.querySelector('#back-button')?.addEventListener('click', () => {
-    const panel = document.querySelector('.glass-panel');
-    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
-    const panelHasOverflow = panel && panel.scrollHeight > panel.clientHeight + 1;
-    if (panelHasOverflow && typeof panel.scrollTo === 'function') panel.scrollTo({ top: 0, behavior });
-    else window.scrollTo({ top: 0, behavior });
-    document.querySelector('#page-title')?.focus({ preventScroll: true });
-  });
 })();

@@ -121,84 +121,43 @@ svg { display: block; width: 100%; height: 100%; fill: none; stroke: currentColo
   opacity: .88;
 }
 
-.top-controls {
-  position: relative;
-  display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) 44px;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.icon-control {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  padding: 10px;
-  border: 0;
-  border-radius: 50%;
-  color: #fffaf5;
-  background: transparent;
-  cursor: pointer;
-  transition: background 180ms ease, transform 180ms ease;
-}
-.icon-control svg { width: 24px; height: 24px; stroke-width: 2; }
-.icon-control:hover { background: rgba(255,255,255,.12); transform: translateY(-1px); }
-.icon-control:active { transform: scale(.94); }
-.progress { position: relative; display: grid; place-items: center; height: 34px; }
-.progress-track {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 8px;
-  overflow: hidden;
-  border-radius: 99px;
-  background: rgba(230, 223, 232, .22);
-  transform: translateY(-50%);
-}
-.progress-track span {
-  display: block;
-  width: 16.6667%;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #ffd9a7, #ffb86e);
-  box-shadow: 0 0 18px rgba(255, 189, 120, .5);
-}
-.progress-count {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  min-width: 60px;
-  height: 34px;
-  padding: 0 13px;
-  border-radius: 999px;
-  color: #26202a;
-  background: #fffaf6;
-  font: 700 15px/1 var(--font-display);
-  box-shadow: 0 3px 12px rgba(0,0,0,.12);
-}
-
 .brand-lockup {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  flex-direction: column;
+  gap: 5px;
   margin: 0 auto;
   color: var(--cream-strong);
 }
 .monogram {
-  color: #ffe1b6;
-  font: 300 38px/.9 Georgia, 'Times New Roman', serif;
-  letter-spacing: -7px;
-  padding-right: 8px;
-  text-shadow: 0 0 24px rgba(255, 196, 132, .18);
+  display: block;
+  width: max-content;
+  font: 300 74px/.92 Georgia, 'Times New Roman', serif;
+  letter-spacing: -10px;
+  padding-right: 12px;
+  transform: scaleX(.72);
+  transform-origin: center;
+  background: linear-gradient(164deg, #fff8de 2%, #e4b45f 28%, #fff0bd 40%, #9e6b27 56%, #ffe4a2 73%, #bd8a37 91%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 3px 9px rgba(51, 21, 4, .22);
 }
-.brand-divider { width: 1px; height: 38px; background: rgba(255, 236, 218, .54); }
-.brand-name { display: flex; flex-direction: column; gap: 2px; font: 400 14px/1.08 var(--font-display); letter-spacing: .025em; }
-.brand-name strong { font-weight: 500; }
+.brand-name { text-align: center; }
+.brand-name strong {
+  display: block;
+  font: 800 clamp(23px, 2.4vw, 29px)/1.1 var(--font-display);
+  letter-spacing: -.035em;
+  background:
+    radial-gradient(circle at 30% 35%, rgba(255,255,255,.48) 0 1px, transparent 1.8px) 0 0/9px 9px,
+    linear-gradient(170deg, #fff6d6 1%, #e0ad54 28%, #fff0b0 43%, #a16f2c 60%, #f4c978 82%, #bf8d39 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 1px rgba(61, 34, 19, .65)) drop-shadow(0 -1px 0 rgba(255, 248, 211, .18));
+}
 .brand-tagline {
   margin: 9px 0 0;
   text-align: center;
@@ -207,10 +166,15 @@ svg { display: block; width: 100%; height: 100%; fill: none; stroke: currentColo
   font-weight: 600;
   letter-spacing: .25em;
 }
-.heading-wrap { margin: 20px 0 14px; text-align: center; }
+.heading-wrap { margin: 15px 0 13px; text-align: center; }
 .heading-wrap h1 {
   margin: 0;
-  color: #fff2dc;
+  color: #e9dfff;
+  background: linear-gradient(110deg, #f9ecfc 0%, #d4c8ff 31%, #a8bff8 58%, #a98ce9 84%, #68549e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 2px rgba(9, 7, 34, .66));
   font: 800 clamp(24px, 2.3vw, 28px)/1.16 var(--font-display);
   letter-spacing: -.035em;
   text-wrap: balance;
@@ -338,7 +302,6 @@ a.social-button:hover { transform: translateY(-3px); border-color: rgba(255, 207
 
 @media (min-width: 760px) and (max-height: 800px) {
   .glass-panel { padding: 14px 24px; }
-  .top-controls { margin-bottom: 6px; }
   .brand-tagline { margin-top: 7px; }
   .heading-wrap { margin: 15px 0 10px; }
   .golden-underline { margin-top: 10px; }
@@ -361,14 +324,9 @@ a.social-button:hover { transform: translateY(-3px); border-color: rgba(255, 207
   .portrait { left: 50%; top: 0; bottom: auto; width: min(100vw, 470px); height: min(54svh, 510px); opacity: 1; background-image: var(--portrait-image-mobile, var(--portrait-image, url("assets/portrait-mobile.webp"))); background-position: center bottom; background-size: contain; transform: translate3d(calc(-50% + var(--pointer-x) * 6px), var(--scroll-shift), 0); }
   .portrait-shade { background: linear-gradient(180deg, rgba(66,43,61,.02), rgba(31,18,28,.08) 56%, rgba(31,18,28,.26)); }
   .glass-panel { display: block; position: relative; z-index: 1; left: auto; top: auto; transform: none; margin: min(54svh, 510px) auto 20px; width: min(430px, calc(100vw - 24px)); height: auto; max-height: none; overflow: visible; padding: 17px 18px 18px; border-radius: 34px; }
-  .top-controls { grid-template-columns: 44px minmax(0,1fr) 44px; gap: 8px; margin-bottom: 16px; }
-  .icon-control { width: 44px; height: 44px; padding: 10px; }
-  .progress-count { min-width: 58px; height: 32px; font-size: 14px; }
-  .progress-track { height: 8px; }
-  .brand-lockup { gap: 11px; }
-  .monogram { font-size: 46px; letter-spacing: -6px; }
-  .brand-divider { height: 43px; }
-  .brand-name { font-size: 16px; }
+  .brand-lockup { gap: 6px; }
+  .monogram { font-size: 68px; letter-spacing: -9px; }
+  .brand-name strong { font-size: clamp(23px, 6vw, 29px); }
   .brand-tagline { margin-top: 13px; font-size: 8px; letter-spacing: .22em; }
   .heading-wrap { margin: 25px 0 18px; }
   .heading-wrap h1 { font-size: clamp(25px, 7vw, 31px); }
@@ -391,7 +349,6 @@ a.social-button:hover { transform: translateY(-3px); border-color: rgba(255, 207
 
 @media (max-height: 740px) and (max-width: 759px) {
   .glass-panel { padding-top: 12px; padding-bottom: 12px; }
-  .top-controls { margin-bottom: 12px; }
   .brand-tagline { margin-top: 9px; }
   .heading-wrap { margin: 16px 0 12px; }
   .golden-underline { margin-top: 10px; }
