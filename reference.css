@@ -215,6 +215,14 @@
     height: 136svh;
     background-position: left top;
     background-size: contain;
+    /* Fade the lower half of the source photograph: the seated legs must
+       never be visible on desktop, while the head and upper torso stay intact. */
+    -webkit-mask-image: linear-gradient(
+      to bottom, #000 0%, #000 42%, rgba(0, 0, 0, .84) 53%, transparent 71%
+    );
+    mask-image: linear-gradient(
+      to bottom, #000 0%, #000 42%, rgba(0, 0, 0, .84) 53%, transparent 71%
+    );
   }
   .glass-panel {
     position: relative;
