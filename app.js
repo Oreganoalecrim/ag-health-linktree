@@ -3,8 +3,15 @@
   const linksRoot = document.querySelector('#links');
   const socialsRoot = document.querySelector('#socials');
   const portrait = document.querySelector('.portrait');
-  const portraitUrl = window.__PORTRAIT_URL__ || config.portraitUrl;
-  if (portrait && portraitUrl) portrait.style.setProperty('--portrait-image', `url("${portraitUrl}")`);
+  const portraitDesktopUrl = window.__PORTRAIT_URL__ || config.portraitUrl;
+  const portraitTabletUrl = window.__PORTRAIT_TABLET_URL__ || config.portraitTabletUrl || portraitDesktopUrl;
+  const portraitMobileUrl = window.__PORTRAIT_MOBILE_URL__ || config.portraitMobileUrl || portraitTabletUrl;
+  if (portrait) {
+    if (portraitDesktopUrl) portrait.style.setProperty('--portrait-image-desktop', `url("${portraitDesktopUrl}")`);
+    if (portraitTabletUrl) portrait.style.setProperty('--portrait-image-tablet', `url("${portraitTabletUrl}")`);
+    if (portraitMobileUrl) portrait.style.setProperty('--portrait-image-mobile', `url("${portraitMobileUrl}")`);
+    if (portraitTabletUrl || portraitDesktopUrl) portrait.style.setProperty('--portrait-image', `url("${portraitTabletUrl || portraitDesktopUrl}")`);
+  }
 
   const icons = {
     play: '<path d="M8 5.5v13l10-6.5-10-6.5Z" fill="currentColor" stroke="none"/>',
@@ -74,7 +81,11 @@
   if (closeButton && config.officialSite) closeButton.href = config.officialSite;
 
   document.querySelector('#back-button')?.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    const panel = document.querySelector('.glass-panel');
+    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    const panelHasOverflow = panel && panel.scrollHeight > panel.clientHeight + 1;
+    if (panelHasOverflow && typeof panel.scrollTo === 'function') panel.scrollTo({ top: 0, behavior });
+    else window.scrollTo({ top: 0, behavior });
     document.querySelector('#page-title')?.focus({ preventScroll: true });
   });
 })();

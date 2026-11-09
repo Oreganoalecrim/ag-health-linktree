@@ -4,6 +4,8 @@ const whatsapp = (message) => `https://wa.me/5547996792529?text=${encodeURICompo
 
 window.LINKTREE_CONFIG = {
   portraitUrl: 'assets/portrait.webp',
+  portraitTabletUrl: 'assets/portrait-tablet.webp',
+  portraitMobileUrl: 'assets/portrait-mobile.webp',
   links: [
     {
       icon: 'play',
