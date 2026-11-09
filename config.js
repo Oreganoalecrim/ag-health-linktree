@@ -3,6 +3,7 @@
 const whatsapp = (message) => `https://wa.me/5547996792529?text=${encodeURIComponent(message)}`;
 
 window.LINKTREE_CONFIG = {
+  portraitUrl: 'assets/portrait.webp',
   links: [
     {
       icon: 'play',

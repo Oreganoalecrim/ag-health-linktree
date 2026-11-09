@@ -2,6 +2,9 @@
   const config = window.LINKTREE_CONFIG || {};
   const linksRoot = document.querySelector('#links');
   const socialsRoot = document.querySelector('#socials');
+  const portrait = document.querySelector('.portrait');
+  const portraitUrl = window.__PORTRAIT_URL__ || config.portraitUrl;
+  if (portrait && portraitUrl) portrait.style.setProperty('--portrait-image', `url("${portraitUrl}")`);
 
   const icons = {
     play: '<path d="M8 5.5v13l10-6.5-10-6.5Z" fill="currentColor" stroke="none"/>',
