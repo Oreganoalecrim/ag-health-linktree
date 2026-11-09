@@ -319,16 +319,16 @@ a.social-button:hover { transform: translateY(-3px); border-color: rgba(255, 207
 @keyframes sheen { to { transform: translateX(100%); } }
 
 @media (min-width: 760px) {
-  .portal { display: block; padding: 34px 0; }
-  .portrait { left: calc(50% - 360px); width: 220px; }
-  .glass-panel { position: absolute; left: calc(50% - 158px); top: 50%; transform: translateY(-50%); margin: 0; width: min(568px, calc((100svh - 68px) * .465)); max-height: calc(100svh - 68px); padding: 18px 28px 18px; }
+  .portal { display: block; padding: 0; }
+  .portrait { left: calc(50% - 40svh); width: 22.3svh; }
+  .glass-panel { display: flex; flex-direction: column; justify-content: space-between; position: absolute; left: calc(50% - 17.6svh); top: 50%; transform: translateY(-50%); margin: 0; width: min(568px, 40.3svh); height: min(1216px, 86.7svh); max-height: calc(100svh - 68px); padding: 18px 28px; }
 }
 
 @media (max-width: 759px) {
   .portal { place-items: center; padding: max(14px, env(safe-area-inset-top)) 12px max(14px, env(safe-area-inset-bottom)); }
   .portrait { width: 58vw; opacity: .96; }
   .portrait-shade { background: linear-gradient(90deg, rgba(66,43,61,.04), rgba(31,18,28,.14)); }
-  .glass-panel { position: relative; left: auto; top: auto; transform: none; margin: 0 auto; width: min(430px, calc(100vw - 24px)); max-height: calc(100svh - 28px); padding: 17px 18px 18px; border-radius: 34px; }
+  .glass-panel { display: block; position: relative; left: auto; top: auto; transform: none; margin: 0 auto; width: min(430px, calc(100vw - 24px)); height: auto; max-height: calc(100svh - 28px); padding: 17px 18px 18px; border-radius: 34px; }
   .top-controls { grid-template-columns: 32px minmax(0,1fr) 32px; gap: 8px; margin-bottom: 18px; }
   .icon-control { width: 32px; height: 32px; padding: 6px; }
   .progress-count { min-width: 58px; height: 32px; font-size: 14px; }
