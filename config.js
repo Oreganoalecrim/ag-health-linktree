@@ -20,7 +20,7 @@ window.LINKTREE_CONFIG = {
     {
       icon: 'brain',
       title: 'Neurodiet™',
-      description: 'Saúde cerebral e prevenção do Alzheimer',
+      description: 'Prevenção e reversão do Alzheimer',
       url: whatsapp('Tenho interesse no programa Neurodiet.'),
     },
     {
