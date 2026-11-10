@@ -42,17 +42,17 @@ test('preserves branded identity while removing unwanted navigation chrome', () 
   assert.match(html, /href="reference\.css\?v=/);
 });
 
-test('uses only the specifically approved generated portrait on every breakpoint', () => {
-  const name = 'portrait-approved.webp';
+test('uses only the portrait from the Custódio budget, without generative replacement', () => {
+  const name = 'portrait-budget-hero.webp';
   const file = path.join(root, 'assets', name);
-  assert.ok(statSync(file).size > 100_000, 'approved portrait must have photographic detail');
+  assert.ok(statSync(file).size > 25_000, 'extracted portrait must retain source detail');
   const header = readFileSync(file).subarray(0, 12).toString('ascii');
   assert.equal(header.slice(0, 4), 'RIFF');
   assert.equal(header.slice(8, 12), 'WEBP');
-  assert.equal(config.portraitUrl, `assets/${name}`);
-  assert.equal(config.portraitTabletUrl, `assets/${name}`);
-  assert.equal(config.portraitMobileUrl, `assets/${name}`);
-  assert.doesNotMatch(`${html}\n${css}\n${read('reference.css')}\n${read('config.js')}`, /assets\/(?:portrait\.webp|portrait-tablet\.webp|portrait-mobile\.webp)/);
+  assert.equal(config.portraitUrl, `assets/${name}?v=20261110-segmented`);
+  assert.equal(config.portraitTabletUrl, `assets/${name}?v=20261110-segmented`);
+  assert.equal(config.portraitMobileUrl, `assets/${name}?v=20261110-segmented`);
+  assert.doesNotMatch(`${html}\n${css}\n${read('reference.css')}\n${read('config.js')}`, /assets\/(?:portrait\.webp|portrait-tablet\.webp|portrait-mobile\.webp|portrait-approved\.webp)/);
   assert.match(app, /--portrait-image-desktop/);
   assert.match(app, /--portrait-image-tablet/);
   assert.match(app, /--portrait-image-mobile/);
@@ -65,7 +65,7 @@ test('does not bind the removed navigation controls', () => {
 
 test('places a large bust behind an overlapping glass panel on mobile and desktop', () => {
   const reference = read('reference.css');
-  assert.match(reference, /\.portrait\s*\{[^}]*background-size:\s*cover/s);
+  assert.match(reference, /\.portrait\s*\{[^}]*background-size:\s*contain/s);
   assert.match(reference, /@media \(max-width: 759px\)[\s\S]*?\.portrait\s*\{[^}]*width:\s*128vw/s);
   assert.match(reference, /\.glass-panel\s*\{[^}]*backdrop-filter/s);
   assert.match(reference, /\.glass-panel\s*\{[^}]*left:\s*auto;[^}]*top:\s*auto;[^}]*transform:\s*none/s);
@@ -84,7 +84,7 @@ test('compacts tablet landscape without shrinking primary touch targets below 44
 
 test('declares the official Open Graph URL and portrait description', () => {
   assert.match(html, /property="og:url" content="https:\/\/dr-andre-gustavo\.lovable\.app\/"/);
-  assert.match(html, /property="og:image" content="assets\/portrait-approved\.webp"/);
+  assert.match(html, /property="og:image" content="assets\/portrait-budget-hero\.webp"/);
   assert.match(html, /property="og:image:alt" content="Retrato do Dr\. André G\. Eichstaedt"/);
 });
 

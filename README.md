@@ -1,6 +1,6 @@
 # AG Health — Link oficial
 
-Microsite estático, mobile-first e sem coleta de dados. O retrato aprovado pelo usuário é o único fundo autorizado, com o painel Liquid Glass sobreposto no desktop e em celulares. Seis destinos oficiais, redes sociais e CTA de agendamento permanecem clicáveis.
+Microsite estático, mobile-first e sem coleta de dados. O retrato de referência foi extraído diretamente da imagem do orçamento do Custódio, com painel Liquid Glass sobreposto no desktop e em celulares. Seis destinos oficiais, redes sociais e CTA de agendamento permanecem clicáveis.
 
 ## Estrutura
 
@@ -8,9 +8,11 @@ Microsite estático, mobile-first e sem coleta de dados. O retrato aprovado pelo
 - `styles.css`: layout responsivo, glassmorphism, estados de interação e acessibilidade.
 - `app.js`: renderização segura dos links e ícones a partir da configuração.
 - `config.js`: destinos públicos verificados; mensagens WhatsApp pré-preenchidas.
-- `assets/portrait-approved.png`: retrato original gerado e aprovado na conversa em 10/11/2026 (1122 × 1402 px).
-- `assets/portrait-approved.webp`: otimização WebP para carregamento eficiente; a única fotografia exibida em todos os breakpoints.
-- Os arquivos legados `portrait.webp`, `portrait-tablet.webp` e `portrait-mobile.webp` permanecem no histórico do repositório mas não são referenciados pelo site.
+- `assets/portrait-budget-exact.png`: recorte sem edição do retrato na arte do orçamento do Custódio (324 × 407 px), sem informações do paciente.
+- `assets/portrait-budget-mask.png`: máscara de segmentação criada localmente pelo Apple Vision, apenas pessoa, sem reconstrução de rosto.
+- `assets/portrait-budget-hero.webp`: ampliação por Lanczos com pessoa segmentada e bordas suavizadas, sem substituir rosto nem inventar detalhes; usado em todos os breakpoints.
+- `scripts/segment-budget-portrait.swift`: segmenta o retrato exato com o Apple Vision; `scripts/extract-budget-portrait.py` reproduz a extração a partir da imagem do orçamento em arquivo local privado (não versionar o orçamento completo).
+- Os retratos anteriores (`portrait-approved`, `portrait.webp`, `portrait-tablet.webp`, `portrait-mobile.webp`) não são referenciados pela página.
 
 ## Executar localmente
 

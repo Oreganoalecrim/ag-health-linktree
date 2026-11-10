@@ -3,10 +3,10 @@
 const whatsapp = (message) => `https://wa.me/5547996792529?text=${encodeURIComponent(message)}`;
 
 window.LINKTREE_CONFIG = {
-  // Apenas o retrato aprovado nesta conversa; nenhuma foto antiga por breakpoint.
-  portraitUrl: 'assets/portrait-approved.webp',
-  portraitTabletUrl: 'assets/portrait-approved.webp',
-  portraitMobileUrl: 'assets/portrait-approved.webp',
+  // Retrato extraído da própria arte do orçamento do Custódio, sem outro rosto.
+  portraitUrl: 'assets/portrait-budget-hero.webp?v=20261110-segmented',
+  portraitTabletUrl: 'assets/portrait-budget-hero.webp?v=20261110-segmented',
+  portraitMobileUrl: 'assets/portrait-budget-hero.webp?v=20261110-segmented',
   links: [
     {
       icon: 'play',

@@ -1,5 +1,5 @@
-/* AG Health: a foto aprovada forma o cenário; os controles são HTML reais
-   desenhados sobre vidro espesso. Nenhuma imagem anterior é utilizada. */
+/* AG Health: o retrato extraído do orçamento de referência forma o cenário;
+   os controles são HTML reais sobre Liquid Glass. Não gerar outro rosto. */
 .portal {
   display: flex;
   align-items: center;
@@ -23,9 +23,9 @@
   bottom: auto;
   width: min(84vw, 1320px);
   height: 106svh;
-  background-image: var(--portrait-image-desktop, url("assets/portrait-approved.webp"));
+  background-image: var(--portrait-image-desktop, url("assets/portrait-budget-hero.webp"));
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: 48% top;
   filter: saturate(1.02) contrast(1.015);
   transform: translate3d(calc(var(--pointer-x) * 7px), calc(var(--pointer-y) * 5px + var(--scroll-shift)), 0);
@@ -230,8 +230,8 @@
     top: 0;
     width: 128vw;
     height: 100%;
-    background-image: var(--portrait-image-mobile, url("assets/portrait-approved.webp"));
-    background-size: cover;
+    background-image: var(--portrait-image-mobile, url("assets/portrait-budget-hero.webp"));
+    background-size: contain;
     background-position: 30% top;
     opacity: 1;
     -webkit-mask-image: none;
