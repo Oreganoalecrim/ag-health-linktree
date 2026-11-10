@@ -1,6 +1,6 @@
 # AG Health — Link oficial
 
-Microsite estático, mobile-first e sem coleta de dados. A interface reproduz a referência aprovada “Dr. André: Saúde e Longevidade envidraçadas”, com painel Liquid Glass, fotografia original em destaque, seis destinos oficiais, redes sociais e CTA de agendamento. Em desktop/tablet, o retrato ampliado fica atrás do painel; em celulares, o retrato aparece acima do painel e a página rola naturalmente.
+Microsite estático, mobile-first e sem coleta de dados. O retrato aprovado pelo usuário é o único fundo autorizado, com o painel Liquid Glass sobreposto no desktop e em celulares. Seis destinos oficiais, redes sociais e CTA de agendamento permanecem clicáveis.
 
 ## Estrutura
 
@@ -8,11 +8,9 @@ Microsite estático, mobile-first e sem coleta de dados. A interface reproduz a 
 - `styles.css`: layout responsivo, glassmorphism, estados de interação e acessibilidade.
 - `app.js`: renderização segura dos links e ícones a partir da configuração.
 - `config.js`: destinos públicos verificados; mensagens WhatsApp pré-preenchidas.
-- `assets/portrait.webp`: retrato integral tratado em luz de pôr do sol para desktop.
-- `assets/portrait-tablet.webp`: mesmo retrato integral otimizado para tablets.
-- `assets/portrait-mobile.webp`: mesmo retrato integral otimizado para celulares.
-- `assets/portrait-provenance.md`: procedência e hash da fotografia-fonte; segmentação local com Apple Vision e color grading sem mudança de identidade ou recortes.
-- `scripts/build-sunset-portraits.py`: processamento local reproduzível do retrato com máscara gerada pelo Apple Vision; o original não é distribuído no repositório.
+- `assets/portrait-approved.png`: retrato original gerado e aprovado na conversa em 10/11/2026 (1122 × 1402 px).
+- `assets/portrait-approved.webp`: otimização WebP para carregamento eficiente; a única fotografia exibida em todos os breakpoints.
+- Os arquivos legados `portrait.webp`, `portrait-tablet.webp` e `portrait-mobile.webp` permanecem no histórico do repositório mas não são referenciados pelo site.
 
 ## Executar localmente
 
@@ -32,4 +30,4 @@ Os links foram verificados no Linktree oficial existente. Spotify é exibido vis
 
 ## Design e privacidade
 
- O painel usa o material deep-glass do IBMI Reference Lab (blur, saturação e bordas/reflexos especulares); os cartões internos usam superfícies translúcidas sem blur aninhado. `reference.css` recria o enquadramento editorial aprovado de rosto e busto grandes à esquerda com card flutuante sobreposto — eliminando a pose sentada visível no layout anterior. O arquivo da fotografia original permanece preservado, e o recorte é apenas o enquadramento da viewport. A interface inclui a faixa `1/6`, controles reais Voltar/Fechar/Reabrir e o título `Explore meus conteúdos e projetos`, além de deslocamento de profundidade ao movimentar o ponteiro, parallax e fallback `prefers-reduced-motion`. A página não carrega fontes remotas, analytics, pixels, banco de dados ou scripts de rastreamento.
+O painel usa vidro translúcido com blur, saturação, borda e reflexos especulares; os cartões internos são transparentes. O CTA Continuar usa vidro mais espesso, highlights e sombras internas. O logotipo AG foi estreitado e os elementos de navegação superiores (seta, X e 1/6) foram removidos. O título permanece `Explore meus conteúdos e projetos`. A página respeita `prefers-reduced-motion` e não carrega fontes remotas, analytics, pixels, banco de dados nem scripts de rastreamento.

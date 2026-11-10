@@ -33,44 +33,45 @@ test('keeps the approved Neurodiet description verbatim', () => {
   assert.equal(neurodiet?.description, 'Prevenção e reversão do Alzheimer');
 });
 
-test('restores reference card with branded identity, progress and six links', () => {
+test('preserves branded identity while removing unwanted navigation chrome', () => {
   assert.match(html, /DR\. ANDRÉ G\./);
   assert.match(html, /EICHSTAEDT/);
   assert.match(html, /Explore meus<br \/>conteúdos e projetos/);
-  assert.match(html, /id="back-button"/);
-  assert.match(html, /id="close-button"/);
-  assert.match(html, /class="progress-count">1\/6/);
-  assert.match(html, /role="progressbar"/);
+  assert.doesNotMatch(html, /id="back-button"|id="close-button"|id="open-panel"/);
+  assert.doesNotMatch(html, /progress-count|role="progressbar"|top-controls/);
   assert.match(html, /href="reference\.css\?v=/);
 });
 
-test('ships responsive WebP portrait variants from the same source photo', () => {
-  for (const name of ['portrait.webp', 'portrait-tablet.webp', 'portrait-mobile.webp']) {
-    const file = path.join(root, 'assets', name);
-    assert.ok(statSync(file).size > 20_000, `${name} should be a full-resolution portrait asset`);
-    const header = readFileSync(file).subarray(0, 12).toString('ascii');
-    assert.equal(header.slice(0, 4), 'RIFF');
-    assert.equal(header.slice(8, 12), 'WEBP');
-  }
+test('uses only the specifically approved generated portrait on every breakpoint', () => {
+  const name = 'portrait-approved.webp';
+  const file = path.join(root, 'assets', name);
+  assert.ok(statSync(file).size > 100_000, 'approved portrait must have photographic detail');
+  const header = readFileSync(file).subarray(0, 12).toString('ascii');
+  assert.equal(header.slice(0, 4), 'RIFF');
+  assert.equal(header.slice(8, 12), 'WEBP');
+  assert.equal(config.portraitUrl, `assets/${name}`);
+  assert.equal(config.portraitTabletUrl, `assets/${name}`);
+  assert.equal(config.portraitMobileUrl, `assets/${name}`);
+  assert.doesNotMatch(`${html}\n${css}\n${read('reference.css')}\n${read('config.js')}`, /assets\/(?:portrait\.webp|portrait-tablet\.webp|portrait-mobile\.webp)/);
   assert.match(app, /--portrait-image-desktop/);
   assert.match(app, /--portrait-image-tablet/);
   assert.match(app, /--portrait-image-mobile/);
 });
 
-test('back, close and reopen controls remain functional', () => {
-  assert.match(app, /#back-button/);
-  assert.match(app, /#close-button/);
-  assert.match(app, /#open-panel/);
-  assert.match(app, /addEventListener\('click', showPanel\)/);
+test('does not bind the removed navigation controls', () => {
+  assert.doesNotMatch(app, /#back-button|#close-button|#open-panel|closePanel|showPanel/);
   assert.match(app, /prefers-reduced-motion: reduce/);
 });
 
 test('places a large bust behind an overlapping glass panel on mobile and desktop', () => {
   const reference = read('reference.css');
-  assert.match(reference, /\.portrait\s*\{[^}]*background-size:\s*contain/s);
-  assert.match(reference, /@media \(max-width: 759px\)[\s\S]*?\.portrait\s*\{[^}]*width:\s*950px/s);
+  assert.match(reference, /\.portrait\s*\{[^}]*background-size:\s*cover/s);
+  assert.match(reference, /@media \(max-width: 759px\)[\s\S]*?\.portrait\s*\{[^}]*width:\s*128vw/s);
   assert.match(reference, /\.glass-panel\s*\{[^}]*backdrop-filter/s);
-  assert.match(reference, /\.top-controls\s*\{/);
+  assert.match(reference, /\.glass-panel\s*\{[^}]*left:\s*auto;[^}]*top:\s*auto;[^}]*transform:\s*none/s);
+  assert.match(reference, /\.monogram\s*\{[^}]*scaleX\(\.62\)/s);
+  assert.match(reference, /\.continue-button\s*\{[^}]*backdrop-filter/s);
+  assert.match(reference, /\.continue-button\s*\{[^}]*rgba\(255,253,245,\.71\)/s);
   assert.doesNotMatch(reference, /margin:\s*min\(54svh/);
 });
 
@@ -83,7 +84,7 @@ test('compacts tablet landscape without shrinking primary touch targets below 44
 
 test('declares the official Open Graph URL and portrait description', () => {
   assert.match(html, /property="og:url" content="https:\/\/dr-andre-gustavo\.lovable\.app\/"/);
-  assert.match(html, /property="og:image" content="assets\/portrait\.webp"/);
+  assert.match(html, /property="og:image" content="assets\/portrait-approved\.webp"/);
   assert.match(html, /property="og:image:alt" content="Retrato do Dr\. André G\. Eichstaedt"/);
 });
 

@@ -3,9 +3,10 @@
 const whatsapp = (message) => `https://wa.me/5547996792529?text=${encodeURIComponent(message)}`;
 
 window.LINKTREE_CONFIG = {
-  portraitUrl: 'assets/portrait.webp',
-  portraitTabletUrl: 'assets/portrait-tablet.webp',
-  portraitMobileUrl: 'assets/portrait-mobile.webp',
+  // Apenas o retrato aprovado nesta conversa; nenhuma foto antiga por breakpoint.
+  portraitUrl: 'assets/portrait-approved.webp',
+  portraitTabletUrl: 'assets/portrait-approved.webp',
+  portraitMobileUrl: 'assets/portrait-approved.webp',
   links: [
     {
       icon: 'play',

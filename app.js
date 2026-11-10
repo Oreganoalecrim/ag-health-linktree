@@ -120,35 +120,4 @@
   const continueButton = document.querySelector('#continue-button');
   if (continueButton && config.continueUrl) continueButton.href = config.continueUrl;
 
-  const panel = document.querySelector('.glass-panel');
-  const openPanelButton = document.querySelector('#open-panel');
-  const closePanel = () => {
-    if (!panel || !openPanelButton) return;
-    panel.classList.add('is-closed');
-    panel.setAttribute('aria-hidden', 'true');
-    openPanelButton.hidden = false;
-    openPanelButton.focus();
-  };
-  const showPanel = () => {
-    if (!panel || !openPanelButton) return;
-    panel.classList.remove('is-closed');
-    panel.removeAttribute('aria-hidden');
-    openPanelButton.hidden = true;
-    panel.querySelector('#page-title')?.focus({ preventScroll: true });
-  };
-
-  document.querySelector('#close-button')?.addEventListener('click', closePanel);
-  openPanelButton?.addEventListener('click', showPanel);
-  document.querySelector('#back-button')?.addEventListener('click', () => {
-    if (document.referrer && window.history.length > 1) {
-      window.history.back();
-    } else {
-      closePanel();
-    }
-  });
-  window.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && !openPanelButton?.hidden) return;
-    if (event.key === 'Escape') closePanel();
-  });
-
 })();
