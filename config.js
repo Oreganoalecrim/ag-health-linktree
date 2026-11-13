@@ -3,6 +3,10 @@
 const whatsapp = (message) => `https://wa.me/5547996792529?text=${encodeURIComponent(message)}`;
 
 window.LINKTREE_CONFIG = {
+  // Publica apenas links habilitados; nenhum token ou segredo chega ao navegador.
+  // A API depende da implantação autorizada de instagram-public-bio no Supabase.
+  publicLinksApiUrl: 'https://nxzaryaeufkaeflmmlyt.supabase.co/functions/v1/instagram-public-bio',
+
   // Retrato extraído da própria arte do orçamento do Custódio, sem outro rosto.
   portraitUrl: 'assets/portrait-budget-hero.webp?v=20261110-segmented',
   portraitTabletUrl: 'assets/portrait-budget-hero.webp?v=20261110-segmented',

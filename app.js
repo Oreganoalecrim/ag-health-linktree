@@ -1,4 +1,4 @@
-(() => {
+(async () => {
   const config = window.LINKTREE_CONFIG || {};
   const linksRoot = document.querySelector('#links');
   const socialsRoot = document.querySelector('#socials');
@@ -73,7 +73,31 @@
 
   const svg = (name) => `<svg viewBox="0 0 24 24" aria-hidden="true">${icons[name] || icons.arrow}</svg>`;
 
-  for (const item of config.links || []) {
+  let renderedLinks = config.links || [];
+  const selectedProfile = new URLSearchParams(window.location.search).get('profile');
+  const syncStatus = document.querySelector('#linktree-sync-status');
+  if (selectedProfile) {
+    const response = await window.LINKTREE_REMOTE_LINKS?.load(config, selectedProfile);
+    if (!response?.ok) {
+      // Fail closed: a request for another brand must not show Dr. André's static links.
+      renderedLinks = [];
+      if (syncStatus) {
+        syncStatus.hidden = false;
+        syncStatus.textContent = 'Links deste perfil temporariamente indisponíveis.';
+      }
+    } else {
+      renderedLinks = response.links;
+      const heading = document.querySelector('.brand-name strong');
+      if (heading) heading.textContent = response.displayName || `@${response.profile}`;
+      document.title = `@${response.profile} | Links oficiais`;
+      if (syncStatus && renderedLinks.length === 0) {
+        syncStatus.hidden = false;
+        syncStatus.textContent = 'Nenhum link publicado para este perfil.';
+      }
+    }
+  }
+
+  for (const item of renderedLinks) {
     if (!item.url) continue;
     const anchor = document.createElement('a');
     anchor.className = 'link-card';
