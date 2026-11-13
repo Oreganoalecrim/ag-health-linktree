@@ -372,3 +372,12 @@ a.social-button:hover { transform: translateY(-3px); border-color: rgba(255, 207
   .glass-panel { background: rgba(25, 17, 25, .94); }
   .link-card, .social-button { background: rgba(47, 33, 44, .94); }
 }
+
+/* A public profile selected by ?profile= is isolated from the default Dr. André link page. */
+.profile-mode .portrait,
+.profile-mode .portrait-shade,
+.profile-mode .monogram,
+.profile-mode .brand-tagline,
+.profile-mode #socials,
+.profile-mode #continue-button { display: none; }
+#linktree-sync-status:not([hidden]) { margin: 0.5rem 0 1rem; opacity: .85; font-size: .85rem; }
