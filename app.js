@@ -77,6 +77,11 @@
   const selectedProfile = new URLSearchParams(window.location.search).get('profile');
   const syncStatus = document.querySelector('#linktree-sync-status');
   if (selectedProfile) {
+    // A brand-specific URL must never inherit Dr. André's portrait, socials or CTA.
+    document.body.classList.add('profile-mode');
+    const brandHeading = document.querySelector('.brand-name strong');
+    if (brandHeading) brandHeading.textContent = `@${selectedProfile}`;
+    document.title = `@${selectedProfile} | Links oficiais`;
     const response = await window.LINKTREE_REMOTE_LINKS?.load(config, selectedProfile);
     if (!response?.ok) {
       // Fail closed: a request for another brand must not show Dr. André's static links.
