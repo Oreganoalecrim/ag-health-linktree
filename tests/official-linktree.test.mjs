@@ -95,21 +95,37 @@ test('preserves working consultation CTA', () => {
   assert.ok(config.continueUrl.startsWith('https://wa.me/'));
 });
 
-test('responds to pointer and scroll with requestAnimationFrame, with reduced-motion fallback', () => {
-  assert.match(app, /pointermove/);
+test('isolates porcelain parallax to the glass panel, never moving the photograph', () => {
+  const porcelain = read('porcelain-links.css');
+  assert.match(html, /href="porcelain-links\.css\?v=/);
+  assert.match(app, /panel\.addEventListener\('pointermove'/);
+  assert.match(app, /panel\.addEventListener\('pointerleave'/);
+  assert.match(app, /panel\.addEventListener\('scroll'/);
+  assert.match(app, /window\.addEventListener\('scroll'/);
   assert.match(app, /window\.requestAnimationFrame\(/);
-  assert.match(app, /--pointer-x/);
-  assert.match(app, /--pointer-y/);
-  assert.match(app, /--scroll-shift/);
+  for (const name of ['--panel-shift-x', '--panel-shift-y', '--panel-tilt-x', '--panel-tilt-y', '--panel-scroll-y']) {
+    assert.ok(app.includes(name));
+    assert.ok(porcelain.includes(name));
+  }
+  assert.doesNotMatch(app, /portal\.addEventListener\('pointermove'|portal\.style\.setProperty\('--scroll-shift'/);
+  assert.match(read('reference.css'), /\.portrait\s*\{[^}]*transform:\s*none/s);
   assert.match(app, /prefers-reduced-motion: reduce/);
-  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
-  assert.match(css, /\.portrait, \.ambient \{ transform: none !important/);
-  const reference = read('reference.css');
-  assert.match(reference, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(porcelain, /@media \(prefers-reduced-motion:reduce\)/);
+  assert.match(porcelain, /\.glass-panel\s*\{transform: none !important/);
+});
+
+test('sculpts a porcelain cove with raised 3D link tiles and inset icon relief', () => {
+  const porcelain = read('porcelain-links.css');
+  assert.match(porcelain, /\.link-list\s*\{[^}]*inset 5px 7px 12px/s);
+  assert.match(porcelain, /\.link-card,[\s\S]*?0 5px 0 rgba\(/s);
+  assert.match(porcelain, /\.link-icon\s*\{[^}]*inset -2px -2px 6px/s);
+  assert.match(porcelain, /\.link-card:active\s*\{[^}]*inset 4px 5px 10px/s);
+  assert.match(porcelain, /\.link-card:hover/);
+  assert.match(porcelain, /\.continue-button\s*\{[^}]*0 6px 0 rgba\(/s);
 });
 
 test('does not add analytics, tracking, or sharing', () => {
-  const source = `${html}\n${app}\n${css}\n${read('reference.css')}`.toLowerCase();
+  const source = `${html}\n${app}\n${css}\n${read('reference.css')}\n${read('porcelain-links.css')}`.toLowerCase();
   for (const marker of ['gtag(', 'googletagmanager', 'analytics.js', 'facebook pixel', 'hotjar', 'mixpanel', 'amplitude', 'navigator.share']) {
     assert.equal(source.includes(marker), false, `unexpected feature marker: ${marker}`);
   }

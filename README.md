@@ -5,8 +5,10 @@ Microsite estático, mobile-first e sem coleta de dados. O retrato atualmente ap
 ## Estrutura
 
 - `index.html`: estrutura semântica, metadados SEO/Open Graph e conteúdo principal.
-- `styles.css`: layout responsivo, glassmorphism, estados de interação e acessibilidade.
-- `app.js`: renderização segura dos links e ícones a partir da configuração.
+- `styles.css`: base de layout, estados de interação e acessibilidade.
+- `reference.css`: retrato full-bleed e painel Liquid Glass responsivo.
+- `porcelain-links.css`: tabela de links neomórfica em porcelana, inspirada no módulo **Light** da AG Clinic (sanca rebaixada, relevos, ícones esculpidos e comportamento de pressão).
+- `app.js`: renderização segura dos links e ícones; parallax suave do painel ao mover o cursor e ao rolar a página, sem movimentar a foto.
 - `config.js`: destinos públicos verificados; mensagens WhatsApp pré-preenchidas.
 - `assets/portrait-sunset-wide-20261113.png`: fotografia panorâmica original aprovada, conservada sem alteração.
 - `assets/portrait-sunset-wide-20261113.webp`: mesma foto otimizada para web (91% de qualidade, 79 KB).
@@ -32,4 +34,4 @@ Os links foram verificados no Linktree oficial existente. Spotify é exibido vis
 
 ## Design e privacidade
 
-O painel usa modo claro: vidro translúcido com blur real, saturação, bordas refletivas e reflexos especulares; os cartões internos também são translúcidos. O fundo fotográfico é full-bleed em todos os breakpoints, sem recortes abruptos. No celular, o painel começa aproximadamente a 25% da altura da tela e sobrepõe mais da metade do rosto; no desktop fica à direita. O CTA Continuar usa vidro mais espesso, highlights e sombras internas. O logotipo AG foi estreitado e os elementos de navegação superiores (seta, X e 1/6) foram removidos. O título permanece `Explore meus conteúdos e projetos`. A página respeita `prefers-reduced-motion` e não carrega fontes remotas, analytics, pixels, banco de dados nem scripts de rastreamento.
+O painel usa modo claro: vidro translúcido com blur real, saturação, bordas refletivas e reflexos especulares; os cartões de links são placas sólidas de porcelana com sombras internas/externas e sensação de relevo 3D. O fundo fotográfico é full-bleed em todos os breakpoints, sem recortes abruptos. No celular, o painel começa aproximadamente a 25% da altura da tela e sobrepõe mais da metade do rosto; no desktop fica à direita. O CTA Continuar usa vidro mais espesso, highlights e sombras internas. O logotipo AG foi estreitado e os elementos de navegação superiores (seta, X e 1/6) foram removidos. O título permanece `Explore meus conteúdos e projetos`. O parallax acontece exclusivamente no painel e é desabilitado quando `prefers-reduced-motion` está ativo. A página respeita `prefers-reduced-motion` e não carrega fontes remotas, analytics, pixels, banco de dados nem scripts de rastreamento.

@@ -13,46 +13,56 @@
     if (portraitTabletUrl || portraitDesktopUrl) portrait.style.setProperty('--portrait-image', `url("${portraitTabletUrl || portraitDesktopUrl}")`);
   }
 
-  // Gentle depth on the existing photograph; the viewport frames the bust,
-  // and reduced-motion users see the same composition without movement.
-  // Request-animation-frame limits work to one update per painted frame.
+  // AG Clinic Light: porcelain panel has subtle isolated parallax.
+  // The photograph and the portal remain completely static.
   const portal = document.querySelector('.portal');
+  const panel = document.querySelector('.glass-panel');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const pointerDepth = window.matchMedia('(hover: hover) and (pointer: fine)');
-  if (portal && !reducedMotion.matches) {
+  if (portal && panel && !reducedMotion.matches) {
     let pointerFrame = 0;
     let pointerX = 0;
     let pointerY = 0;
     const paintPointer = () => {
-      portal.style.setProperty('--pointer-x', pointerX.toFixed(3));
-      portal.style.setProperty('--pointer-y', pointerY.toFixed(3));
+      panel.style.setProperty('--panel-shift-x', `${(pointerX * 5).toFixed(2)}px`);
+      panel.style.setProperty('--panel-shift-y', `${(pointerY * 4).toFixed(2)}px`);
+      panel.style.setProperty('--panel-tilt-x', `${(-pointerY * 1.5).toFixed(2)}deg`);
+      panel.style.setProperty('--panel-tilt-y', `${(pointerX * 1.8).toFixed(2)}deg`);
+      panel.style.setProperty('--panel-glint-x', `${(50 + pointerX * 34).toFixed(1)}%`);
       pointerFrame = 0;
     };
-    const requestPointerPaint = () => {
-      if (!pointerFrame) pointerFrame = window.requestAnimationFrame(paintPointer);
-    };
     if (pointerDepth.matches) {
-      portal.addEventListener('pointermove', (event) => {
-        const rect = portal.getBoundingClientRect();
+      panel.addEventListener('pointermove', (event) => {
+        const rect = panel.getBoundingClientRect();
         pointerX = Math.max(-1, Math.min(1, (2 * (event.clientX - rect.left) / rect.width) - 1));
         pointerY = Math.max(-1, Math.min(1, (2 * (event.clientY - rect.top) / rect.height) - 1));
-        requestPointerPaint();
+        if (!pointerFrame) pointerFrame = window.requestAnimationFrame(paintPointer);
       }, { passive: true });
-      portal.addEventListener('pointerleave', () => {
+      panel.addEventListener('pointerleave', () => {
         pointerX = 0;
         pointerY = 0;
-        requestPointerPaint();
+        if (!pointerFrame) pointerFrame = window.requestAnimationFrame(paintPointer);
       });
     }
+
+    // Scroll-down gently shifts just the porcelain slab; no photo movement.
+    // Native document scrolling still moves the panel naturally on mobile.
     let scrollFrame = 0;
     const paintScroll = () => {
-      const progress = Math.min(1, Math.max(0, window.scrollY / Math.max(1, window.innerHeight)));
-      portal.style.setProperty('--scroll-shift', window.innerWidth < 760 ? `${(-14 * progress).toFixed(1)}px` : '0px');
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const progress = Math.max(0, Math.min(1, window.scrollY / maxScroll));
+      const internal = Math.max(0, panel.scrollHeight - panel.clientHeight);
+      const panelProgress = internal > 0 ? panel.scrollTop / internal : 0;
+      const amount = window.innerWidth < 760 ? progress : panelProgress;
+      panel.style.setProperty('--panel-scroll-y', `${(-12 * amount).toFixed(2)}px`);
       scrollFrame = 0;
     };
-    window.addEventListener('scroll', () => {
+    const requestScrollPaint = () => {
       if (!scrollFrame) scrollFrame = window.requestAnimationFrame(paintScroll);
-    }, { passive: true });
+    };
+    window.addEventListener('scroll', requestScrollPaint, { passive: true });
+    panel.addEventListener('scroll', requestScrollPaint, { passive: true });
+    window.addEventListener('resize', requestScrollPaint, { passive: true });
     paintScroll();
   }
 
