@@ -24,10 +24,10 @@
     let pointerX = 0;
     let pointerY = 0;
     const paintPointer = () => {
-      panel.style.setProperty('--panel-shift-x', `${(pointerX * 5).toFixed(2)}px`);
-      panel.style.setProperty('--panel-shift-y', `${(pointerY * 4).toFixed(2)}px`);
-      panel.style.setProperty('--panel-tilt-x', `${(-pointerY * 1.5).toFixed(2)}deg`);
-      panel.style.setProperty('--panel-tilt-y', `${(pointerX * 1.8).toFixed(2)}deg`);
+      panel.style.setProperty('--panel-shift-x', `${(pointerX * 3).toFixed(2)}px`);
+      panel.style.setProperty('--panel-shift-y', `${(pointerY * 2).toFixed(2)}px`);
+      panel.style.setProperty('--panel-tilt-x', `${(-pointerY * 0.55).toFixed(2)}deg`);
+      panel.style.setProperty('--panel-tilt-y', `${(pointerX * 0.7).toFixed(2)}deg`);
       panel.style.setProperty('--panel-glint-x', `${(50 + pointerX * 34).toFixed(1)}%`);
       pointerFrame = 0;
     };
@@ -54,7 +54,7 @@
       const internal = Math.max(0, panel.scrollHeight - panel.clientHeight);
       const panelProgress = internal > 0 ? panel.scrollTop / internal : 0;
       const amount = window.innerWidth < 760 ? progress : panelProgress;
-      panel.style.setProperty('--panel-scroll-y', `${(-12 * amount).toFixed(2)}px`);
+      panel.style.setProperty('--panel-scroll-y', `${(-8 * amount).toFixed(2)}px`);
       scrollFrame = 0;
     };
     const requestScrollPaint = () => {

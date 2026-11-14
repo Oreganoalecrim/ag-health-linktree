@@ -111,18 +111,22 @@ test('isolates porcelain parallax to the glass panel, never moving the photograp
   assert.match(read('reference.css'), /\.portrait\s*\{[^}]*transform:\s*none/s);
   assert.match(app, /prefers-reduced-motion: reduce/);
   assert.match(porcelain, /@media \(prefers-reduced-motion:reduce\)/);
-  assert.match(porcelain, /\.glass-panel\s*\{transform: none !important/);
+  assert.match(porcelain, /\.glass-panel\s*\{\s*transform:\s*none !important/);
 });
 
-test('sculpts a porcelain cove with raised 3D link tiles and inset icon relief', () => {
+test('uses calibrated soft neumorphism, aligned icons and no stacked hard extrusion', () => {
   const porcelain = read('porcelain-links.css');
-  assert.match(porcelain, /\.link-list\s*\{[^}]*inset 8px 10px 19px rgba\(0,0,0,\.72\)/s);
-  assert.match(porcelain, /\.link-card,[\s\S]*?0 8px 0 #a99780/s);
-  assert.match(porcelain, /\.link-icon\s*\{[^}]*inset 5px 6px 9px rgba\(0,0,0,\.79\)/s);
+  assert.match(porcelain, /\.link-list\s*\{[^}]*inset 3px 3px 7px rgba\(/s);
+  assert.match(porcelain, /\.link-card,[\s\S]*?3px 4px 9px rgba\(/s);
+  assert.match(porcelain, /\.link-card::before,[\s\S]*?\.link-card::after \{ display: none; \}/s);
+  assert.match(porcelain, /\.link-icon\s*\{[^}]*inset 2px 3px 5px rgba\(/s);
   assert.match(porcelain, /\.link-icon svg\s*\{[^}]*color:\s*#fffefa/s);
-  assert.match(porcelain, /\.link-card:active\s*\{[^}]*inset 6px 8px 13px/s);
+  assert.match(porcelain, /\.link-icon svg\s*\{[^}]*stroke-width:\s*1\.7/s);
+  assert.match(porcelain, /\.link-card:active\s*\{[^}]*inset 2px 3px 6px/s);
   assert.match(porcelain, /\.link-card:hover/);
-  assert.match(porcelain, /\.continue-button\s*\{[^}]*0 8px 0 #a99780/s);
+  assert.match(porcelain, /\.link-arrow\s*\{[^}]*background: none;[^}]*box-shadow: none/s);
+  assert.match(porcelain, /\.continue-button\s*\{[^}]*3px 4px 10px rgba\(/s);
+  assert.doesNotMatch(porcelain, /0 (?:[6-9]|1\d)px 0 (?:#|rgba)|translateY\(-5px\)|translateY\(7px\)/);
 });
 
 test('preserves the original panorama while the links panel uses a pale gray frosted glass', () => {
@@ -130,7 +134,8 @@ test('preserves the original panorama while the links panel uses a pale gray fro
   const porcelain = read('porcelain-links.css');
   assert.match(html, /name="theme-color" content="#292e30"/);
   assert.match(html, /reference\.css\?v=20261114-frosted-gray-1/);
-  assert.match(html, /porcelain-links\.css\?v=20261114-smoke-porcelain-1/);
+  assert.match(html, /porcelain-links\.css\?v=20261114-soft-neu-1/);
+  assert.match(html, /app\.js\?v=20261114-soft-neu-1/);
   assert.match(reference, /html, body \{ background: #ca8ca1/);
   assert.match(reference, /background: linear-gradient\(140deg, #ae7c9d, #e68e9c 52%, #ffad79\)/);
   assert.match(reference, /rgba\(41, 20, 36, \.03\) 8%, transparent 45%, rgba\(55, 28, 57, \.10\)/);
@@ -140,7 +145,7 @@ test('preserves the original panorama while the links panel uses a pale gray fro
   assert.match(reference, /backdrop-filter:\s*blur\(25px\) saturate\(24%\)/);
   assert.match(reference, /\.heading-wrap h1\s*\{[^}]*color:\s*#283135/s);
   assert.doesNotMatch(reference, /rgba\(49,54,55,\.84\)|rgba\(29,34,36,\.73\)/);
-  assert.match(porcelain, /#eadcc7 47%,#cdbba5 100%/);
+  assert.match(porcelain, /#f0eade 0%,#e8e1d5 100%/);
   assert.doesNotMatch(porcelain, /rgba\(165,125,138|#f4eae6|#e5d7d6|#7d596d/);
 });
 
