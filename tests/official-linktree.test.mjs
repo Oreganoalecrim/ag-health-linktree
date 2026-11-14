@@ -125,13 +125,16 @@ test('sculpts a porcelain cove with raised 3D link tiles and inset icon relief',
   assert.match(porcelain, /\.continue-button\s*\{[^}]*0 8px 0 #a99780/s);
 });
 
-test('uses graphite glass and beige porcelain rather than the earlier pink palette', () => {
+test('restores original panorama colors while smoke remains only on the porcelain links panel', () => {
   const reference = read('reference.css');
   const porcelain = read('porcelain-links.css');
   assert.match(html, /name="theme-color" content="#292e30"/);
   assert.match(html, /reference\.css\?v=20261114-smoke-porcelain-1/);
   assert.match(html, /porcelain-links\.css\?v=20261114-smoke-porcelain-1/);
-  assert.match(reference, /html, body \{ background: #292e30/);
+  assert.match(reference, /html, body \{ background: #ca8ca1/);
+  assert.match(reference, /background: linear-gradient\(140deg, #ae7c9d, #e68e9c 52%, #ffad79\)/);
+  assert.match(reference, /rgba\(41, 20, 36, \.03\) 8%, transparent 45%, rgba\(55, 28, 57, \.10\)/);
+  assert.doesNotMatch(reference, /\.portrait-shade::after|mix-blend-mode:\s*color/);
   assert.match(reference, /rgba\(49,54,55,\.84\)/);
   assert.match(porcelain, /#eadcc7 47%,#cdbba5 100%/);
   assert.doesNotMatch(porcelain, /rgba\(165,125,138|#f4eae6|#e5d7d6|#7d596d/);

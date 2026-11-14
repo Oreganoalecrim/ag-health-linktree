@@ -8,7 +8,7 @@
   --text-primary: #f5eee3;
   --text-muted: #d6c9b9;
 }
-html, body { background: #292e30; color: var(--text-primary); }
+html, body { background: #ca8ca1; color: var(--text-primary); }
 .portal {
   display: flex;
   justify-content: flex-end;
@@ -16,7 +16,7 @@ html, body { background: #292e30; color: var(--text-primary); }
   min-height: 100svh;
   overflow: clip;
   padding: max(18px, env(safe-area-inset-top)) clamp(24px, 7vw, 120px) max(18px, env(safe-area-inset-bottom));
-  background: linear-gradient(140deg, #353a3b, #262b2d 54%, #444647);
+  background: linear-gradient(140deg, #ae7c9d, #e68e9c 52%, #ffad79);
 }
 .ambient { display: none; }
 .portrait {
@@ -43,23 +43,8 @@ html, body { background: #292e30; color: var(--text-primary); }
   position: fixed;
   inset: 0;
   z-index: -1;
-  /* Desaturação por vidro de chumbo sobre o cenário, sem alterar o asset. */
-  background: linear-gradient(100deg,
-    rgba(29, 35, 37, .16) 0%,
-    rgba(30, 35, 37, .27) 42%,
-    rgba(22, 27, 29, .50) 100%);
-  pointer-events: none;
-}
-.portrait-shade::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: #42484a;
-  mix-blend-mode: color;
-  opacity: .72;
-  /* Tonaliza o céu magenta, mas preserva a cor do rosto sem recortes bruscos. */
-  -webkit-mask-image: radial-gradient(ellipse 19% 32% at 30% 34%, transparent 37%, #000 96%);
-  mask-image: radial-gradient(ellipse 19% 32% at 30% 34%, transparent 37%, #000 96%);
+  /* O retrato panorâmico mantém as cores originais; fumê apenas no quadro. */
+  background: linear-gradient(92deg, rgba(41, 20, 36, .03) 8%, transparent 45%, rgba(55, 28, 57, .10) 100%);
   pointer-events: none;
 }
 .glass-panel {
@@ -254,11 +239,7 @@ a.social-button:hover { background: rgba(255,255,255,.70); border-color: #fff; }
   }
   .portrait-shade {
     position: absolute;
-    background: linear-gradient(180deg, rgba(25,30,32,.13), rgba(23,28,30,.30) 60%, rgba(19,24,26,.57));
-  }
-  .portrait-shade::after {
-    -webkit-mask-image: radial-gradient(ellipse 34% 20% at 49% 16%, transparent 28%, #000 88%);
-    mask-image: radial-gradient(ellipse 34% 20% at 49% 16%, transparent 28%, #000 88%);
+    background: linear-gradient(180deg, rgba(42,23,44,.01), rgba(42,23,44,.04) 62%, rgba(45,25,42,.11));
   }
   .glass-panel {
     display: block;
