@@ -42,17 +42,18 @@ test('preserves branded identity while removing unwanted navigation chrome', () 
   assert.match(html, /href="reference\.css\?v=/);
 });
 
-test('uses only the portrait from the Custódio budget, without generative replacement', () => {
-  const name = 'portrait-budget-hero.webp';
+test('uses the latest user-approved panoramic sunset portrait, without abrupt edges', () => {
+  const name = 'portrait-sunset-wide-20261113.webp';
   const file = path.join(root, 'assets', name);
-  assert.ok(statSync(file).size > 25_000, 'extracted portrait must retain source detail');
+  assert.ok(statSync(file).size > 25_000);
   const header = readFileSync(file).subarray(0, 12).toString('ascii');
   assert.equal(header.slice(0, 4), 'RIFF');
   assert.equal(header.slice(8, 12), 'WEBP');
-  assert.equal(config.portraitUrl, `assets/${name}?v=20261110-segmented`);
-  assert.equal(config.portraitTabletUrl, `assets/${name}?v=20261110-segmented`);
-  assert.equal(config.portraitMobileUrl, `assets/${name}?v=20261110-segmented`);
-  assert.doesNotMatch(`${html}\n${css}\n${read('reference.css')}\n${read('config.js')}`, /assets\/(?:portrait\.webp|portrait-tablet\.webp|portrait-mobile\.webp|portrait-approved\.webp)/);
+  assert.equal(config.portraitUrl, `assets/${name}?v=20261113-glass`);
+  assert.equal(config.portraitTabletUrl, config.portraitUrl);
+  assert.equal(config.portraitMobileUrl, config.portraitUrl);
+  assert.ok(statSync(path.join(root, 'assets', 'portrait-sunset-wide-20261113.png')).size > 100_000);
+  assert.doesNotMatch(`${html}\n${css}\n${read('reference.css')}\n${read('config.js')}`, /assets\/(?:portrait-budget-hero|portrait-approved|portrait-mobile|portrait-tablet)\.webp/);
   assert.match(app, /--portrait-image-desktop/);
   assert.match(app, /--portrait-image-tablet/);
   assert.match(app, /--portrait-image-mobile/);
@@ -63,15 +64,16 @@ test('does not bind the removed navigation controls', () => {
   assert.match(app, /prefers-reduced-motion: reduce/);
 });
 
-test('places a large bust behind an overlapping glass panel on mobile and desktop', () => {
+test('full-bleed photo and mobile panel overlap, with light Liquid Glass', () => {
   const reference = read('reference.css');
-  assert.match(reference, /\.portrait\s*\{[^}]*background-size:\s*contain/s);
-  assert.match(reference, /@media \(max-width: 759px\)[\s\S]*?\.portrait\s*\{[^}]*width:\s*128vw/s);
-  assert.match(reference, /\.glass-panel\s*\{[^}]*backdrop-filter/s);
-  assert.match(reference, /\.glass-panel\s*\{[^}]*left:\s*auto;[^}]*top:\s*auto;[^}]*transform:\s*none/s);
-  assert.match(reference, /\.monogram\s*\{[^}]*scaleX\(\.62\)/s);
+  assert.match(reference, /\.portrait\s*\{[^}]*background-size:\s*cover/s);
+  assert.match(reference, /\.portrait\s*\{[^}]*mask-image:\s*none/s);
+  assert.match(reference, /@media \(max-width: 759px\)[\s\S]*?\.portrait\s*\{[^}]*background-size:\s*cover/s);
+  assert.match(reference, /@media \(max-width: 759px\)[\s\S]*?\.portal\s*\{[^}]*padding:\s*clamp\(174px, 25svh, 252px\)/s);
+  assert.match(reference, /\.glass-panel\s*\{[^}]*backdrop-filter:\s*blur/s);
+  assert.match(reference, /:root\s*\{[^}]*color-scheme:\s*light/s);
   assert.match(reference, /\.continue-button\s*\{[^}]*backdrop-filter/s);
-  assert.match(reference, /\.continue-button\s*\{[^}]*rgba\(255,253,245,\.71\)/s);
+  assert.match(reference, /prefers-reduced-transparency: reduce/);
   assert.doesNotMatch(reference, /margin:\s*min\(54svh/);
 });
 
@@ -84,7 +86,7 @@ test('compacts tablet landscape without shrinking primary touch targets below 44
 
 test('declares the official Open Graph URL and portrait description', () => {
   assert.match(html, /property="og:url" content="https:\/\/dr-andre-gustavo\.lovable\.app\/"/);
-  assert.match(html, /property="og:image" content="assets\/portrait-budget-hero\.webp"/);
+  assert.match(html, /property="og:image" content="assets\/portrait-sunset-wide-20261113\.png"/);
   assert.match(html, /property="og:image:alt" content="Retrato do Dr\. André G\. Eichstaedt"/);
 });
 

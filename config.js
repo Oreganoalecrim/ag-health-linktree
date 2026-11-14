@@ -8,9 +8,9 @@ window.LINKTREE_CONFIG = {
   publicLinksApiUrl: 'https://nxzaryaeufkaeflmmlyt.supabase.co/functions/v1/instagram-public-bio',
 
   // Retrato extraído da própria arte do orçamento do Custódio, sem outro rosto.
-  portraitUrl: 'assets/portrait-budget-hero.webp?v=20261110-segmented',
-  portraitTabletUrl: 'assets/portrait-budget-hero.webp?v=20261110-segmented',
-  portraitMobileUrl: 'assets/portrait-budget-hero.webp?v=20261110-segmented',
+  portraitUrl: 'assets/portrait-sunset-wide-20261113.webp?v=20261113-glass',
+  portraitTabletUrl: 'assets/portrait-sunset-wide-20261113.webp?v=20261113-glass',
+  portraitMobileUrl: 'assets/portrait-sunset-wide-20261113.webp?v=20261113-glass',
   links: [
     {
       icon: 'play',

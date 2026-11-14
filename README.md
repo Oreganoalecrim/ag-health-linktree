@@ -1,6 +1,6 @@
 # AG Health — Link oficial
 
-Microsite estático, mobile-first e sem coleta de dados. O retrato de referência foi extraído diretamente da imagem do orçamento do Custódio, com painel Liquid Glass sobreposto no desktop e em celulares. Seis destinos oficiais, redes sociais e CTA de agendamento permanecem clicáveis.
+Microsite estático, mobile-first e sem coleta de dados. O retrato atualmente aprovado é a panorâmica de pôr do sol de 13/11/2026. A imagem ocupa toda a tela sem máscaras, e o painel Liquid Glass sobrepõe a maior parte do rosto no celular, conforme a última orientação. Seis destinos oficiais, redes sociais e CTA de agendamento permanecem clicáveis.
 
 ## Estrutura
 
@@ -8,11 +8,11 @@ Microsite estático, mobile-first e sem coleta de dados. O retrato de referênci
 - `styles.css`: layout responsivo, glassmorphism, estados de interação e acessibilidade.
 - `app.js`: renderização segura dos links e ícones a partir da configuração.
 - `config.js`: destinos públicos verificados; mensagens WhatsApp pré-preenchidas.
-- `assets/portrait-budget-exact.png`: recorte sem edição do retrato na arte do orçamento do Custódio (324 × 407 px), sem informações do paciente.
-- `assets/portrait-budget-mask.png`: máscara de segmentação criada localmente pelo Apple Vision, apenas pessoa, sem reconstrução de rosto.
-- `assets/portrait-budget-hero.webp`: ampliação por Lanczos com pessoa segmentada e bordas suavizadas, sem substituir rosto nem inventar detalhes; usado em todos os breakpoints.
+- `assets/portrait-sunset-wide-20261113.png`: fotografia panorâmica original aprovada, conservada sem alteração.
+- `assets/portrait-sunset-wide-20261113.webp`: mesma foto otimizada para web (91% de qualidade, 79 KB).
+- `assets/portrait-budget-*`: arquivos históricos preservados para recuperação, mas não utilizados na versão principal.
 - `scripts/segment-budget-portrait.swift`: segmenta o retrato exato com o Apple Vision; `scripts/extract-budget-portrait.py` reproduz a extração a partir da imagem do orçamento em arquivo local privado (não versionar o orçamento completo).
-- Os retratos anteriores (`portrait-approved`, `portrait.webp`, `portrait-tablet.webp`, `portrait-mobile.webp`) não são referenciados pela página.
+- Os retratos anteriores (`portrait-approved`, `portrait-budget-hero`, `portrait.webp`, `portrait-tablet.webp`, `portrait-mobile.webp`) foram preservados, mas não são referenciados pela página principal.
 
 ## Executar localmente
 
@@ -32,4 +32,4 @@ Os links foram verificados no Linktree oficial existente. Spotify é exibido vis
 
 ## Design e privacidade
 
-O painel usa vidro translúcido com blur, saturação, borda e reflexos especulares; os cartões internos são transparentes. O CTA Continuar usa vidro mais espesso, highlights e sombras internas. O logotipo AG foi estreitado e os elementos de navegação superiores (seta, X e 1/6) foram removidos. O título permanece `Explore meus conteúdos e projetos`. A página respeita `prefers-reduced-motion` e não carrega fontes remotas, analytics, pixels, banco de dados nem scripts de rastreamento.
+O painel usa modo claro: vidro translúcido com blur real, saturação, bordas refletivas e reflexos especulares; os cartões internos também são translúcidos. O fundo fotográfico é full-bleed em todos os breakpoints, sem recortes abruptos. No celular, o painel começa aproximadamente a 25% da altura da tela e sobrepõe mais da metade do rosto; no desktop fica à direita. O CTA Continuar usa vidro mais espesso, highlights e sombras internas. O logotipo AG foi estreitado e os elementos de navegação superiores (seta, X e 1/6) foram removidos. O título permanece `Explore meus conteúdos e projetos`. A página respeita `prefers-reduced-motion` e não carrega fontes remotas, analytics, pixels, banco de dados nem scripts de rastreamento.
