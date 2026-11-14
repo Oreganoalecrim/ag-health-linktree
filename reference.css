@@ -4,9 +4,9 @@
 :root {
   color-scheme: light;
   --glass-blur: 34px;
-  --glass-saturation: 92%;
-  --text-primary: #f5eee3;
-  --text-muted: #d6c9b9;
+  --glass-saturation: 24%;
+  --text-primary: #293033;
+  --text-muted: #424c50;
 }
 html, body { background: #ca8ca1; color: var(--text-primary); }
 .portal {
@@ -62,20 +62,20 @@ html, body { background: #ca8ca1; color: var(--text-primary); }
   overscroll-behavior: contain;
   margin: 0;
   padding: 23px 23px 19px;
-  border: 1px solid rgba(241, 233, 218, .43);
+  border: 1px solid rgba(255, 255, 255, .64);
   border-radius: 38px;
   color: var(--text-primary);
   background:
-    radial-gradient(ellipse at -12% -5%, rgba(229, 224, 213, .17), transparent 48%),
-    linear-gradient(147deg, rgba(49, 54, 55, .86), rgba(31, 36, 38, .76) 48%, rgba(47, 49, 49, .86));
+    radial-gradient(ellipse at -12% -5%, rgba(255, 255, 255, .34), transparent 48%),
+    linear-gradient(147deg, rgba(202, 208, 208, .60), rgba(164, 174, 177, .52) 48%, rgba(196, 204, 205, .58));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
   box-shadow:
-    0 32px 90px rgba(7, 10, 11, .44),
-    0 4px 24px rgba(12, 14, 16, .28),
-    inset 0 2px 1px rgba(247, 242, 229, .33),
-    inset 1px 0 rgba(249, 239, 221, .22),
-    inset 0 -2px rgba(10, 14, 17, .43);
+    0 32px 90px rgba(23, 27, 28, .25),
+    0 4px 24px rgba(19, 22, 24, .14),
+    inset 0 2px 1px rgba(255, 255, 255, .68),
+    inset 1px 0 rgba(255, 255, 255, .32),
+    inset 0 -2px rgba(44, 50, 53, .20);
   animation: panel-enter 540ms var(--ease) both;
 }
 .glass-panel::before {
@@ -84,9 +84,9 @@ html, body { background: #ca8ca1; color: var(--text-primary); }
   inset: 1px;
   border-radius: inherit;
   z-index: 0;
-  background: linear-gradient(128deg, rgba(255,250,235,.15), transparent 28%, transparent 67%, rgba(234,226,210,.07));
-  border: 1px solid rgba(250,242,222,.10);
-  border-top-color: rgba(250,242,222,.38);
+  background: linear-gradient(128deg, rgba(255,255,255,.22), transparent 28%, transparent 67%, rgba(236,240,239,.09));
+  border: 1px solid rgba(255,255,255,.20);
+  border-top-color: rgba(255,255,255,.60);
   pointer-events: none;
 }
 .glass-panel > * { position: relative; z-index: 1; }
@@ -105,11 +105,11 @@ html, body { background: #ca8ca1; color: var(--text-primary); }
   text-shadow: none;
   filter: drop-shadow(0 1px 1px rgba(67,36,32,.15));
 }
-.brand-name { text-align: left; border-left: 1px solid rgba(236,219,191,.35); padding-left: 12px; }
+.brand-name { text-align: left; border-left: 1px solid rgba(63,74,80,.30); padding-left: 12px; }
 .brand-name strong {
   font: 700 13px/1.18 var(--font-display);
   letter-spacing: -.008em;
-  color: #f5efe5;
+  color: #2c3438;
   background: none;
   filter: none;
   -webkit-background-clip: initial;
@@ -117,7 +117,7 @@ html, body { background: #ca8ca1; color: var(--text-primary); }
 }
 .brand-tagline {
   margin: 9px 0 0;
-  color: #d9cabc;
+  color: #455054;
   text-align: center;
   font: 700 8px/1.4 var(--font-sans);
   letter-spacing: .20em;
@@ -126,7 +126,7 @@ html, body { background: #ca8ca1; color: var(--text-primary); }
 .heading-wrap h1 {
   font: 800 clamp(24px, 2.4vw, 28px)/1.09 var(--font-display);
   letter-spacing: -.037em;
-  color: #fff6e9;
+  color: #283135;
   background: none;
   -webkit-background-clip: initial;
   background-clip: initial;
@@ -250,9 +250,9 @@ a.social-button:hover { background: rgba(255,255,255,.70); border-color: #fff; }
     margin: 0 auto;
     padding: 22px 17px 19px;
     border-radius: 34px;
-    background: linear-gradient(150deg, rgba(49,54,55,.84), rgba(29,34,36,.73) 47%, rgba(46,49,49,.85));
-    -webkit-backdrop-filter: blur(20px) saturate(86%);
-    backdrop-filter: blur(20px) saturate(86%);
+    background: linear-gradient(150deg, rgba(202,208,208,.60), rgba(164,174,177,.52) 47%, rgba(196,204,205,.58));
+    -webkit-backdrop-filter: blur(25px) saturate(24%);
+    backdrop-filter: blur(25px) saturate(24%);
   }
   .brand-lockup { gap: 8px; }
   .monogram { font-size: 52px; }
@@ -290,7 +290,7 @@ a.social-button:hover { background: rgba(255,255,255,.70); border-color: #fff; }
   .glass-panel { animation: none !important; }
 }
 @media (prefers-reduced-transparency: reduce) {
-  .glass-panel { background: rgba(39,44,46,.98); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .glass-panel { background: rgba(219,223,223,.98); -webkit-backdrop-filter: none; backdrop-filter: none; }
   .link-card, .social-button { background: #eee1ce; -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
 /* Outras contas não podem herdar fotografia ou CTA do perfil principal. */

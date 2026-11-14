@@ -125,17 +125,21 @@ test('sculpts a porcelain cove with raised 3D link tiles and inset icon relief',
   assert.match(porcelain, /\.continue-button\s*\{[^}]*0 8px 0 #a99780/s);
 });
 
-test('restores original panorama colors while smoke remains only on the porcelain links panel', () => {
+test('preserves the original panorama while the links panel uses a pale gray frosted glass', () => {
   const reference = read('reference.css');
   const porcelain = read('porcelain-links.css');
   assert.match(html, /name="theme-color" content="#292e30"/);
-  assert.match(html, /reference\.css\?v=20261114-smoke-porcelain-1/);
+  assert.match(html, /reference\.css\?v=20261114-frosted-gray-1/);
   assert.match(html, /porcelain-links\.css\?v=20261114-smoke-porcelain-1/);
   assert.match(reference, /html, body \{ background: #ca8ca1/);
   assert.match(reference, /background: linear-gradient\(140deg, #ae7c9d, #e68e9c 52%, #ffad79\)/);
   assert.match(reference, /rgba\(41, 20, 36, \.03\) 8%, transparent 45%, rgba\(55, 28, 57, \.10\)/);
   assert.doesNotMatch(reference, /\.portrait-shade::after|mix-blend-mode:\s*color/);
-  assert.match(reference, /rgba\(49,54,55,\.84\)/);
+  assert.match(reference, /rgba\(202, 208, 208, \.60\)/);
+  assert.match(reference, /rgba\(164, 174, 177, \.52\)/);
+  assert.match(reference, /backdrop-filter:\s*blur\(25px\) saturate\(24%\)/);
+  assert.match(reference, /\.heading-wrap h1\s*\{[^}]*color:\s*#283135/s);
+  assert.doesNotMatch(reference, /rgba\(49,54,55,\.84\)|rgba\(29,34,36,\.73\)/);
   assert.match(porcelain, /#eadcc7 47%,#cdbba5 100%/);
   assert.doesNotMatch(porcelain, /rgba\(165,125,138|#f4eae6|#e5d7d6|#7d596d/);
 });
