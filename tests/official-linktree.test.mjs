@@ -64,7 +64,7 @@ test('does not bind the removed navigation controls', () => {
   assert.match(app, /prefers-reduced-motion: reduce/);
 });
 
-test('full-bleed photo and mobile panel overlap, with light Liquid Glass', () => {
+test('full-bleed photo and mobile panel overlap, with translucent smoke Liquid Glass', () => {
   const reference = read('reference.css');
   assert.match(reference, /\.portrait\s*\{[^}]*background-size:\s*cover/s);
   assert.match(reference, /\.portrait\s*\{[^}]*mask-image:\s*none/s);
@@ -116,12 +116,25 @@ test('isolates porcelain parallax to the glass panel, never moving the photograp
 
 test('sculpts a porcelain cove with raised 3D link tiles and inset icon relief', () => {
   const porcelain = read('porcelain-links.css');
-  assert.match(porcelain, /\.link-list\s*\{[^}]*inset 5px 7px 12px/s);
-  assert.match(porcelain, /\.link-card,[\s\S]*?0 5px 0 rgba\(/s);
-  assert.match(porcelain, /\.link-icon\s*\{[^}]*inset -2px -2px 6px/s);
-  assert.match(porcelain, /\.link-card:active\s*\{[^}]*inset 4px 5px 10px/s);
+  assert.match(porcelain, /\.link-list\s*\{[^}]*inset 8px 10px 19px rgba\(0,0,0,\.72\)/s);
+  assert.match(porcelain, /\.link-card,[\s\S]*?0 8px 0 #a99780/s);
+  assert.match(porcelain, /\.link-icon\s*\{[^}]*inset 5px 6px 9px rgba\(0,0,0,\.79\)/s);
+  assert.match(porcelain, /\.link-icon svg\s*\{[^}]*color:\s*#fffefa/s);
+  assert.match(porcelain, /\.link-card:active\s*\{[^}]*inset 6px 8px 13px/s);
   assert.match(porcelain, /\.link-card:hover/);
-  assert.match(porcelain, /\.continue-button\s*\{[^}]*0 6px 0 rgba\(/s);
+  assert.match(porcelain, /\.continue-button\s*\{[^}]*0 8px 0 #a99780/s);
+});
+
+test('uses graphite glass and beige porcelain rather than the earlier pink palette', () => {
+  const reference = read('reference.css');
+  const porcelain = read('porcelain-links.css');
+  assert.match(html, /name="theme-color" content="#292e30"/);
+  assert.match(html, /reference\.css\?v=20261114-smoke-porcelain-1/);
+  assert.match(html, /porcelain-links\.css\?v=20261114-smoke-porcelain-1/);
+  assert.match(reference, /html, body \{ background: #292e30/);
+  assert.match(reference, /rgba\(49,54,55,\.84\)/);
+  assert.match(porcelain, /#eadcc7 47%,#cdbba5 100%/);
+  assert.doesNotMatch(porcelain, /rgba\(165,125,138|#f4eae6|#e5d7d6|#7d596d/);
 });
 
 test('does not add analytics, tracking, or sharing', () => {
